@@ -1,13 +1,12 @@
 <script>
 
 export default {
-  props: ['latLon', 'rect', 'randomPoint'],
+  props: ['latLon', 'randomPoint'],
   data() {
     return {
       zoom: 15,
       map: null,
       marker: null,
-      polygon: null,
       random: null
     }
   },
@@ -29,22 +28,11 @@ export default {
       };
       this.random.setLatLng(this.randomPoint);
     },
-    updatePolygon() {
-      var latLons = this.rect;
-      if (!this.polygon) {
-        this.polygon = L.polygon([[0,0],[0,0],[0,0],[0,0]]);
-        this.polygon = this.polygon.addTo(this.map);
-      }
-      this.polygon.setLatLngs(latLons);
-    }
   },
   watch: {
     latLon() {
       this.updateView(this.zoom);
       this.updateMarker();
-    },
-    rect() {
-      this.updatePolygon();
     },
     randomPoint() {
       this.updateRandom();
@@ -58,7 +46,6 @@ export default {
     }).addTo(this.map);
     this.updateView();
     this.updateMarker();
-    this.updatePolygon();
     this.updateRandom();
   }
 }
